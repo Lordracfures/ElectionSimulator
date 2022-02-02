@@ -26,7 +26,13 @@ public class ConexionHelper {
         comunidades = ch.listaComunidadesVotantes(connexion);
 
         for (int i = 0; i < comunidades.size(); i++) {
-            System.out.println(comunidades.get(i));
+            System.out.println(comunidades.get(i).toString());
+        }
+
+        for (int i = 0; i < comunidades.size(); i++) {
+            for (int j = 0; j < comunidades.get(i).getRangos().size(); j++) {
+                Votante voto = new Votante(comunidades.get(i).getNombreComunidad(),8);
+            }
         }
     }
 
@@ -79,7 +85,24 @@ public class ConexionHelper {
 
             while (resulset.next()){
 
-                comunidades.add(new Comunidad   (resulset.getString("comunidad"), resulset.getInt("rango_18_25"), resulset.getInt("rango_26_40"), resulset.getInt("rango_41_65"), resulset.getInt("rango_mas_66"), resulset.getInt("habitantes")));
+            //    comunidades.add(new Comunidad   (resulset.getString("comunidad"), resulset.getInt("rango_18_25"), resulset.getInt("rango_26_40"), resulset.getInt("rango_41_65"), resulset.getInt("rango_mas_66"), resulset.getInt("habitantes")));
+
+            System.out.println(resulset.getString("comunidad") + "  " + resulset.getInt("rango_18_25") + "  " + resulset.getInt("rango_26_40") + "  " + resulset.getInt("rango_41_65") + "  "+resulset.getInt("rango_mas_66") + "  "+resulset.getInt("habitantes"));
+
+            // creamos el objeto comunidad y actualizamos las varibles con los datos de la consulta y lo añadimos al arraylist
+                Comunidad comunidad = new Comunidad();
+                comunidad.setNombreComunidad(resulset.getString("comunidad"));
+                int resultado = calcularVotantes(resulset.getInt("rango_18_25"), resulset.getInt("habitantes"));
+                System.out.println("resultado " + resultado);
+                System.out.println(resulset.getInt("rango_18_25"));
+                comunidad.getRangos().add(resultado);
+                comunidad.getRangos().add(calcularVotantes(resulset.getInt("rango_26_40"), resulset.getInt("habitantes")));
+                comunidad.getRangos().add(calcularVotantes(resulset.getInt("rango_41_65"), resulset.getInt("habitantes")));
+                comunidad.getRangos().add(calcularVotantes(resulset.getInt("rango_mas_66"),resulset.getInt("habitantes") ));
+
+
+                System.out.println(comunidad.getRangos().get(0).toString());
+                comunidades.add(comunidad);
 
 
             }
@@ -101,5 +124,15 @@ public class ConexionHelper {
         return comunidades;
     }
 
+    public int calcularVotantes(int porcentaje, int habitantes){
 
+        double coeficiente = 100000, resultado = 0, a = 0;
+
+
+        resultado = (habitantes * ((double)porcentaje/100))/100000;
+
+        System.out.println(resultado);
+
+        return (int)resultado;
+    }
 }
