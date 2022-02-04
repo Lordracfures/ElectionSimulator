@@ -1,11 +1,13 @@
 package com.example.mvc;
 
+import com.example.mvc.controlador.VentanaInicio;
 import javafx.application.Application;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -15,17 +17,38 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class Main extends Application {
+
+    public static Scene scene;
     @Override
     public void start(Stage stage) throws IOException {
 
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("VistaPrincipal.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 375, 550);
-        stage.setTitle("Hello!");
+
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("VentanaInicio.fxml"));
+        //System.out.println(fxmlLoader.getLocation().toString());
+        scene = new Scene(fxmlLoader.load(), 746, 550);
         stage.setScene(scene);
         stage.show();
+
+
+        /*
+        ProgressBar barravox = (ProgressBar) Main.scene.lookup("#barravox"),
+                barrapp = (ProgressBar) Main.scene.lookup("#barrapp"),
+                barrapsoe = (ProgressBar) Main.scene.lookup("#barrapsoe"),
+                barraiu = (ProgressBar) Main.scene.lookup("#barraiu")
+        ;
+
+        barravox.setStyle("-fx-accent: green;");
+        barrapp.setStyle("-fx-accent: blue;");
+        barrapsoe.setStyle("-fx-accent: red;");
+        barraiu.setStyle("-fx-accent: yellow;");
+
+*/
+
 
         boolean supported = Platform.isSupported(ConditionalFeature.GRAPHICS);
         System.out.println(supported);
@@ -34,7 +57,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch();
     }
-
+/*
     public void showBirthdayStatistics() {
         try {
             // Load the fxml file and create a new stage for the popup.
@@ -51,7 +74,7 @@ public class Main extends Application {
 
 
             // Set the persons into the controller.
-            //Controlador controller = loader.getController();
+            //Grafico controller = loader.getController();
           //  controller.setPersonData(personData);
 
             dialogStage.show();
@@ -60,4 +83,6 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+    */
+
 }

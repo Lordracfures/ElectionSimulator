@@ -1,9 +1,15 @@
 package com.example.mvc.modelo;
+import com.example.mvc.Main;
 import com.example.mvc.controlador.Votante;
+import com.example.mvc.controlador.VistaPrincipal;
+import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.ProgressBar;
 
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import javafx.scene.control.ProgressBar;
 import java.util.RandomAccess;
 
 
@@ -11,7 +17,27 @@ public class ConexionHelper {
 
 
 
-    public static  void main(String [] args) throws IOException, ClassNotFoundException, SQLException{
+
+
+    /*
+                public static  void main(String [] args) throws IOException, ClassNotFoundException, SQLException, InterruptedException {
+
+                    ConexionHelper ch = new ConexionHelper();
+                    ch.empezarVotacion();
+
+                }
+            */
+    public void empezarVotacion() throws InterruptedException {
+
+        ProgressBar barravox = (ProgressBar) Main.scene.lookup("#barravox"),
+                barrapp = (ProgressBar) Main.scene.lookup("#barrapp"),
+                barrapsoe = (ProgressBar) Main.scene.lookup("#barrapsoe"),
+                barraiu = (ProgressBar) Main.scene.lookup("#barraiu")
+                        ;
+        /*
+        ProgressBar barra = (ProgressBar) Main.scene.lookup("#barravox");
+        System.out.println(barra.getId());
+*/
 
 
         Connection connexion;
@@ -24,18 +50,36 @@ public class ConexionHelper {
         ArrayList<Comunidad> comunidades;
 
         comunidades = ch.listaComunidadesVotantes(connexion);
-
+/*
         for (int i = 0; i < comunidades.size(); i++) {
             System.out.println(comunidades.get(i).toString());
         }
 
+*/
+        // de rango 18-25 ---- posicion en el array rangos[0]
+        // de rango 26-40 ---- posicion en el array rangos[1]
+        // de rango 41-65 ---- posicion en el array rangos[2]
+        // de rango +66 ---- posicion en el array rangos[3]
+
         for (int i = 0; i < comunidades.size(); i++) {
+            System.out.println(comunidades.get(i).getNombreComunidad());
             for (int j = 0; j < comunidades.get(i).getRangos().size(); j++) {
-                Votante voto = new Votante(comunidades.get(i).getNombreComunidad(),8);
+
+                for (int k = 0; k < (int) comunidades.get(i).getRangos().get(j); k++) {
+                    Votante voto = new Votante(comunidades.get(i).getNombreComunidad(),j);
+                    voto.start();
+                    voto.join();
+                    barravox.setProgress(Votante.conta);
+                    barrapsoe.setProgress(Votante.contb);
+                    barrapp.setProgress(Votante.contc);
+                    barraiu.setProgress(Votante.contd);
+                    barravox.setCache(true);
+
+                }
             }
         }
+        System.out.println(Votante.cont);
     }
-
 
     private Connection createConnection() { // apartado 1
         Connection connection = null;
@@ -93,15 +137,15 @@ public class ConexionHelper {
                 Comunidad comunidad = new Comunidad();
                 comunidad.setNombreComunidad(resulset.getString("comunidad"));
                 int resultado = calcularVotantes(resulset.getInt("rango_18_25"), resulset.getInt("habitantes"));
-                System.out.println("resultado " + resultado);
-                System.out.println(resulset.getInt("rango_18_25"));
+               // System.out.println("resultado " + resultado);
+               // System.out.println(resulset.getInt("rango_18_25"));
                 comunidad.getRangos().add(resultado);
                 comunidad.getRangos().add(calcularVotantes(resulset.getInt("rango_26_40"), resulset.getInt("habitantes")));
                 comunidad.getRangos().add(calcularVotantes(resulset.getInt("rango_41_65"), resulset.getInt("habitantes")));
                 comunidad.getRangos().add(calcularVotantes(resulset.getInt("rango_mas_66"),resulset.getInt("habitantes") ));
 
 
-                System.out.println(comunidad.getRangos().get(0).toString());
+                //System.out.println(comunidad.getRangos().get(0).toString());
                 comunidades.add(comunidad);
 
 
@@ -131,7 +175,7 @@ public class ConexionHelper {
 
         resultado = (habitantes * ((double)porcentaje/100))/100000;
 
-        System.out.println(resultado);
+       // System.out.println(resultado);
 
         return (int)resultado;
     }
