@@ -32,6 +32,8 @@ public class Main extends Application {
         //System.out.println(fxmlLoader.getLocation().toString());
         scene = new Scene(fxmlLoader.load(), 746, 550);
         stage.setScene(scene);
+        //stage.setIconified(true);
+        stage.setResizable(false);
         stage.show();
 
 

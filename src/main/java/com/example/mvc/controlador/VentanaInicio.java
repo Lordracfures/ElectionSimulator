@@ -1,17 +1,21 @@
 package com.example.mvc.controlador;
 
+import com.example.mvc.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 
 public class VentanaInicio {
-    private Stage stage;
+    public static Scene scene;
     @FXML
     Button btncomenzar;
 
@@ -23,9 +27,26 @@ public class VentanaInicio {
         ((Node) (event.getSource())).getScene().getWindow().hide();
 
 
-        URL fxmlLocation = getClass().getResource("com/example/mvc/VistaPrincipal.fxml");
-        FXMLLoader loader = new FXMLLoader(fxmlLocation);
-        System.out.println(loader.getLocation());
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("VistaPrincipal.fxml"));
+        //System.out.println(fxmlLoader.getLocation().toString());
+        scene = new Scene(fxmlLoader.load(), 746, 550);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        //stage.setIconified(true);
+        stage.setResizable(false);
+        stage.show();
+
+        ProgressBar barravox = (ProgressBar) this.scene.lookup("#barravox"),
+                barrapp = (ProgressBar) this.scene.lookup("#barrapp"),
+                barrapsoe = (ProgressBar) this.scene.lookup("#barrapsoe"),
+                barraiu = (ProgressBar) this.scene.lookup("#barraiu")
+                        ;
+
+        barravox.setStyle("-fx-accent: green;");
+        barrapp.setStyle("-fx-accent: blue;");
+        barrapsoe.setStyle("-fx-accent: red;");
+        barraiu.setStyle("-fx-accent: yellow;");
+
 /*
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("VistaPrincipal.fxml"));

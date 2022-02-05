@@ -1,12 +1,14 @@
 package com.example.mvc.controlador;
 
-import com.example.mvc.Main;
-import javafx.scene.control.ProgressBar;
+import com.example.mvc.modelo.ConexionHelper;
+
+import java.sql.Connection;
 
 public class Votante extends Thread{
 
     String nombreComunidad;
     int tipoRango;
+    private Connection conexion;
     public  static double conta = 0, contb = 0, contc = 0, contd = 0;
     public static int cont = 0;
 /*
@@ -16,13 +18,17 @@ public class Votante extends Thread{
             barraiu = (ProgressBar) Main.scene.lookup("#barraiu")
                     ;
 */
-    public Votante(String nombreComunidad, int tipoRango) {
+    public Votante(String nombreComunidad, int tipoRango, Connection connexion) {
         this.nombreComunidad = nombreComunidad;
         this.tipoRango = tipoRango;
+        this.conexion = connexion;
     }
 
     @Override
     public void run() {
+        String tiporango = "";
+
+        ConexionHelper ch = new ConexionHelper();
 
         cont++;
         String partido = "";
@@ -32,22 +38,28 @@ public class Votante extends Thread{
 
             case 0:{
                 partido = votoRango1();
+                tiporango = "18-25";
                 break;
             }
             case 1:{
                 partido = votoRango2();
+                tiporango = "26-40";
                 break;
             }
             case 2:{
                 partido = votoRango3();
+                tiporango = "41-65";
                 break;
             }
             case 3:{
                 partido = votoRango4();
+                tiporango = "+66";
                 break;
             }
 
         }
+
+        ch.insertarVoto(this.conexion,this.nombreComunidad, tiporango, partido);
 
 
             incrementarBarra(partido);
@@ -60,9 +72,7 @@ public class Votante extends Thread{
         System.out.println(" contador de pp: "+contc);
         System.out.println(" contador de iu: "+contd);
 
-        ProgressBar barravox = (ProgressBar) Main.scene.lookup("#barravox");
-        barravox.setVisible(false);
-        barravox.setVisible(true);
+
     }
 
     public String  votoRango1(){ // de 18-25

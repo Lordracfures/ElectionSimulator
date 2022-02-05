@@ -1,5 +1,6 @@
 package com.example.mvc.modelo;
 import com.example.mvc.Main;
+import com.example.mvc.controlador.VentanaInicio;
 import com.example.mvc.controlador.Votante;
 import com.example.mvc.controlador.VistaPrincipal;
 import javafx.fxml.FXML;
@@ -29,10 +30,10 @@ public class ConexionHelper {
             */
     public void empezarVotacion() throws InterruptedException {
 
-        ProgressBar barravox = (ProgressBar) Main.scene.lookup("#barravox"),
-                barrapp = (ProgressBar) Main.scene.lookup("#barrapp"),
-                barrapsoe = (ProgressBar) Main.scene.lookup("#barrapsoe"),
-                barraiu = (ProgressBar) Main.scene.lookup("#barraiu")
+        ProgressBar barravox = (ProgressBar) VentanaInicio.scene.lookup("#barravox"),
+                barrapp = (ProgressBar) VentanaInicio.scene.lookup("#barrapp"),
+                barrapsoe = (ProgressBar) VentanaInicio.scene.lookup("#barrapsoe"),
+                barraiu = (ProgressBar) VentanaInicio.scene.lookup("#barraiu")
                         ;
         /*
         ProgressBar barra = (ProgressBar) Main.scene.lookup("#barravox");
@@ -66,7 +67,7 @@ public class ConexionHelper {
             for (int j = 0; j < comunidades.get(i).getRangos().size(); j++) {
 
                 for (int k = 0; k < (int) comunidades.get(i).getRangos().get(j); k++) {
-                    Votante voto = new Votante(comunidades.get(i).getNombreComunidad(),j);
+                    Votante voto = new Votante(comunidades.get(i).getNombreComunidad(),j, connexion);
                     voto.start();
                     voto.join();
                     barravox.setProgress(Votante.conta);
@@ -178,5 +179,25 @@ public class ConexionHelper {
        // System.out.println(resultado);
 
         return (int)resultado;
+    }
+    public void insertarVoto(Connection conexion, String comunidad, String edad, String partido){
+
+        PreparedStatement preparestatement = null;
+
+       try {
+           String sentenciaSql="INSERT INTO VOTOS_VOTANTE (COMUNIDAD, EDAD, PARTIDO) VALUES (?,?,?)";
+
+           preparestatement = conexion.prepareStatement(sentenciaSql);
+           preparestatement.setString(1, comunidad);
+           preparestatement.setString(2, edad);
+           preparestatement.setString(3, partido);
+
+           preparestatement.executeUpdate();
+
+           conexion.commit();
+       }catch (Exception e){
+           e.printStackTrace();
+       }
+
     }
 }
