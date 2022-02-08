@@ -4,9 +4,12 @@ import com.example.mvc.controlador.VentanaInicio;
 import javafx.application.Application;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,15 +29,18 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
 
 
-
-
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("VentanaInicio.fxml"));
         //System.out.println(fxmlLoader.getLocation().toString());
         scene = new Scene(fxmlLoader.load(), 746, 550);
         stage.setScene(scene);
+
         //stage.setIconified(true);
         stage.setResizable(false);
         stage.show();
+
+
+
+
 
 
         /*
@@ -76,7 +82,7 @@ public class Main extends Application {
 
 
             // Set the persons into the controller.
-            //Grafico controller = loader.getController();
+            //com.example.mvc.controlador.Grafico controller = loader.getController();
           //  controller.setPersonData(personData);
 
             dialogStage.show();

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="514.0" prefWidth="648.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mvc.controlador.Grafico">
+   <children>
+      <PieChart fx:id="piechart" layoutX="86.0" layoutY="57.0" title="Ganadores en función de los rangos" />
+   </children>
+</AnchorPane>

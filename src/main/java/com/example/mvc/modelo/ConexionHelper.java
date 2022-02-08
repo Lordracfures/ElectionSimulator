@@ -20,14 +20,39 @@ public class ConexionHelper {
 
 
 
-    /*
-                public static  void main(String [] args) throws IOException, ClassNotFoundException, SQLException, InterruptedException {
 
-                    ConexionHelper ch = new ConexionHelper();
-                    ch.empezarVotacion();
 
-                }
-            */
+
+    public  int extracted(String partido, String edad) throws SQLException {
+        int votos = 0;
+        ConexionHelper ch = new ConexionHelper();
+
+        Connection conexion = ch.createConnection();
+
+        String sentenciaSql = "SELECT count(*) as total FROM votos_votante where partido = ? and edad = ?";
+        Statement sentencia = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resulset = null;
+
+        try {
+            preparedStatement = conexion.prepareStatement(sentenciaSql); // inicializalimamos la sentencia
+            preparedStatement.setString(1, partido);
+            preparedStatement.setString(2, edad);
+            resulset = preparedStatement.executeQuery();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        while (resulset.next()){
+
+            System.out.println(resulset.getInt("total"));
+            votos = resulset.getInt("total");
+        }
+
+        return votos;
+    }
+
     public void empezarVotacion() throws InterruptedException {
 
         ProgressBar barravox = (ProgressBar) VentanaInicio.scene.lookup("#barravox"),
@@ -200,4 +225,7 @@ public class ConexionHelper {
        }
 
     }
+
+
+
 }

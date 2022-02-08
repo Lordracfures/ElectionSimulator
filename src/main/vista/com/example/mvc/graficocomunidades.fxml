@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="532.0" prefWidth="766.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mvc.controlador.Graficocomunidades">
+   <children>
+      <BarChart fx:id="barchart" layoutX="98.0" layoutY="35.0" prefHeight="481.0" prefWidth="602.0">
+        <xAxis>
+          <CategoryAxis fx:id="caxis" label="Rangos de edad" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="naxis" label="Votos" side="LEFT" />
+        </yAxis>
+      </BarChart>
+   </children>
+</AnchorPane>

@@ -6,13 +6,14 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="533.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mvc.controlador.VistaPrincipal">
+<AnchorPane prefHeight="562.0" prefWidth="757.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mvc.controlador.VistaPrincipal">
    <children>
       <ProgressBar id="barravox" fx:id="barravox" layoutX="46.0" layoutY="161.0" prefHeight="46.0" prefWidth="494.0" progress="0.0" />
       <ProgressBar fx:id="barrapp" layoutX="46.0" layoutY="227.0" prefHeight="46.0" prefWidth="494.0" progress="0.0" />
@@ -23,9 +24,9 @@
       <Label alignment="CENTER" layoutY="293.0" prefHeight="46.0" prefWidth="43.0" style="-fx-background-color: red;" text="PSOE" />
       <Label alignment="CENTER" layoutY="366.0" prefHeight="46.0" prefWidth="43.0" style="-fx-background-color: yellow;" text="IU" />
       <Line endX="655.0" layoutX="99.0" layoutY="140.0" startX="-100.0" />
-      <Line endX="140.0" endY="-59.0" layoutX="427.0" layoutY="72.0" startX="140.0" startY="501.0" />
-      <Text layoutX="620.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="2023" wrappingWidth="86.0000029206276" />
-      <Label layoutX="-3.0" layoutY="434.0" prefHeight="126.0" prefWidth="757.0" style="-fx-background-color: gray;" />
+      <Line endX="140.0" endY="-59.0" layoutX="454.0" layoutY="72.0" startX="140.0" startY="501.0" />
+      <Text layoutX="630.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="2023" wrappingWidth="86.0000029206276" />
+      <Label layoutX="-3.0" layoutY="434.0" prefHeight="126.0" prefWidth="757.0" style="-fx-background-color: gray;" textOverrun="LEADING_ELLIPSIS" />
       <Line endX="665.5" layoutX="89.0" layoutY="214.0" startX="-100.0" stroke="#00000084">
          <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
@@ -51,26 +52,27 @@
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                <stops>
                   <Stop color="BLACK" />
-                  <Stop color="WHITE" offset="1.0" />
+                  <Stop color="#bc4c4c" offset="1.0" />
                </stops>
             </RadialGradient>
          </fill>
       </Line>
       <Button fx:id="boton" defaultButton="true" layoutX="294.0" layoutY="463.0" mnemonicParsing="false" onAction="#iniciarSimulacion" prefHeight="68.0" prefWidth="170.0" style="-fx-background-color: #B0E0E6; -fx-background-radius: white; -fx-border-radius: 20;" text="Iniciar Simulacion" />
-      <Label layoutX="620.0" layoutY="165.0" style="-fx-font-size: 30;" text="22%" />
-      <Label layoutX="620.0" layoutY="231.0" style="-fx-font-size: 30;" text="60%" />
-      <Label layoutX="620.0" layoutY="297.0" style="-fx-font-size: 30;" text="10%" />
-      <Label layoutX="620.0" layoutY="370.0" style="-fx-font-size: 30;" text="25%" />
-      <MenuBar layoutX="-2.0" layoutY="-5.0" prefHeight="27.0" prefWidth="759.0">
+      <Label layoutX="635.0" layoutY="165.0" style="-fx-font-size: 30;" text="22%" />
+      <Label layoutX="635.0" layoutY="231.0" style="-fx-font-size: 30;" text="60%" />
+      <Label layoutX="635.0" layoutY="297.0" style="-fx-font-size: 30;" text="10%" />
+      <Label layoutX="635.0" layoutY="370.0" style="-fx-font-size: 30;" text="25%" />
+      <MenuBar layoutX="1.0" layoutY="-2.0" prefHeight="24.0" prefWidth="756.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" text="Borrar BBDD" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="Estadisticas">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem fx:id="mitemComu" mnemonicParsing="false" onAction="#abrirGrafico2" text="Comunidades" />
+              <MenuItem fx:id="mitemRango" mnemonicParsing="false" onAction="#abrirGrafico" text="Rangos" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -80,5 +82,7 @@
           </Menu>
         </menus>
       </MenuBar>
+      <Label layoutX="14.0" layoutY="70.0" prefHeight="38.0" prefWidth="568.0" style="-fx-font-size: 30;" text="Los partidos mas votados a nivel nacional" textAlignment="RIGHT" />
+      <ProgressIndicator fx:id="carga" layoutX="691.0" layoutY="497.0" />
    </children>
 </AnchorPane>
