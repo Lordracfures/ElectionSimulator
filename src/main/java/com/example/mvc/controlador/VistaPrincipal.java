@@ -13,14 +13,12 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,6 +27,11 @@ import java.util.ResourceBundle;
 
 public class VistaPrincipal implements Initializable {
 
+    public static Scene scene;
+
+    public static Scene getScene() {
+        return scene;
+    }
 
     @FXML
     public Button boton;
@@ -93,10 +96,11 @@ public class VistaPrincipal implements Initializable {
 
     public void iniciarSimulacion(ActionEvent actionEvent) throws InterruptedException {
 
-        barravox.setProgress(v);
+
         if(activ == false){
             boton.setText("Contando votos...");
             System.out.println("Simulación en proceso");
+
 
             ch.empezarVotacion();
 
@@ -109,33 +113,28 @@ public class VistaPrincipal implements Initializable {
         }
     }
 
-    public void abrirGrafico(ActionEvent actionEvent) throws IOException {
 
-        // crear los una funcion por cada variable asignada
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("PSOE", 13),
-                new PieChart.Data("IU", 15),
-                new PieChart.Data("VOX", 10),
-                new PieChart.Data("PP", 22));
+
+    public void abrirGrafico(ActionEvent actionEvent) throws IOException, SQLException {
+
+        ConexionHelper ch = new ConexionHelper();
+        System.out.println("Grafico comunidades pulsado");
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Grafico.fxml"));
 
-        Scene scene = new Scene(fxmlLoader.load(), 746, 550);
+        scene = new Scene(fxmlLoader.load(), 746, 550);
         Stage stage = new Stage();
-        PieChart pieChart = (PieChart) scene.lookup("#piechart");
-        pieChart.setData(pieChartData);
-        stage.setResizable(false);
+
+
         stage.setScene(scene);
+
+
         stage.show();
-        System.out.println("Grafico rango pulsado");
-
-
-
     }
 
     public void abrirGrafico2(ActionEvent actionEvent) throws IOException, SQLException {
         ConexionHelper ch = new ConexionHelper();
-        System.out.println("Grafico comunidades pulsado");
+        System.out.println("Grafico rangos pulsado");
 
         ;
 
@@ -187,5 +186,17 @@ public class VistaPrincipal implements Initializable {
 
 
         stage.show();
+    }
+
+    public void borrarTabla(ActionEvent actionEvent) throws SQLException {
+        ConexionHelper ch = new ConexionHelper();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Cambios en la base de datos");
+        alert.setHeaderText(null);
+        alert.setContentText("La recolección de votos va a reiniciarse...");
+        alert.showAndWait();
+
+        ch.eliminarBbdd();
     }
 }
